@@ -9,19 +9,23 @@
         <h3>Flotobook</h3>
             <ul>
                 <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li><a href="{{ url_for('login') }}">Login</a></li>
+                {% if current_user.is_anonymous %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% endif %}
             </ul>
             <hr>
         </div>
         <div>
-            {% with message = get_flashed_messages() %}
-            {% if messages %}
-            <ul>
-                {% for message in messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
             {% endwith %}
         </div>
             {% block content %}
